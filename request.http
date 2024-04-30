@@ -1,0 +1,8 @@
+### GET all picture
+GET http://localhost:3000/api/v1/pictures
+
+### GET picture by id
+GET http://localhost:3000/api/v1/pictures/4
+
+### Delete picture by id
+DELETE http://localhost:3000/api/v1/pictures/1

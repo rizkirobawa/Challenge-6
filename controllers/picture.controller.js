@@ -31,6 +31,7 @@ module.exports = {
       let { url } = await imagekit.upload({
         fileName: Date.now() + path.extname(req.file.originalname),
         file: strFile,
+        folder: "/challenge-6",
       });
 
       let picture = await prisma.picture.create({
@@ -53,6 +54,17 @@ module.exports = {
 
   index: async (req, res, next) => {
     try {
+      const { search } = req.query;
+
+      const picture = await prisma.picture.findMany({
+        where: { title: { contains: search, mode: "insensitive" } },
+      });
+
+      res.status(200).json({
+        status: true,
+        message: "OK",
+        data: picture,
+      });
     } catch (error) {
       next(error);
     }
@@ -60,13 +72,25 @@ module.exports = {
 
   show: async (req, res, next) => {
     try {
-    } catch (error) {
-      next(error);
-    }
-  },
+      const id = Number(req.params.id);
 
-  update: async (req, res, next) => {
-    try {
+      const picture = await prisma.picture.findUnique({
+        where: { id: id },
+      });
+
+      if (!picture) {
+        return res.status(404).json({
+          status: false,
+          message: `Can't find picture with ID ${id}`,
+          data: null,
+        });
+      }
+
+      res.status(200).json({
+        status: true,
+        message: "OK",
+        data: picture,
+      });
     } catch (error) {
       next(error);
     }
@@ -74,6 +98,70 @@ module.exports = {
 
   destroy: async (req, res, next) => {
     try {
+      const id = Number(req.params.id);
+
+      const exist = await prisma.picture.findUnique({ where: { id: id } });
+
+      if (!exist) {
+        return res.status(404).json({
+          status: true,
+          message: `Picture with ID ${id} not found`,
+        });
+      }
+
+      const pictureURL = exist.picture_url;
+
+      await imagekit.deleteFile(pictureURL);
+
+      await prisma.picture.delete({
+        where: { id: id },
+      });
+
+      res.status(200).json({
+        status: true,
+        message: `Picture with ID ${id} deleted successfully`,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  update: async (req, res, next) => {
+    try {
+      const id = Number(req.params.id);
+
+      const { title, description } = req.body;
+
+      if (!title && !description) {
+        return res.status(400).json({
+          status: false,
+          message: "At least one Input must be required",
+        });
+      }
+
+      const exist = await prisma.picture.findUnique({ where: { id: id } });
+
+      if (!exist) {
+        return res.status(404).json({
+          status: false,
+          message: `Can't find picture with ID ${id}`,
+          data: null,
+        });
+      }
+
+      const picture = await prisma.picture.update({
+        where: { id },
+        data: {
+          title,
+          description,
+        },
+      });
+
+      res.status(200).json({
+        status: true,
+        message: "Update picture successfully!",
+        data: picture,
+      });
     } catch (error) {
       next(error);
     }
