@@ -14,9 +14,9 @@ datasource db {
 }
 
 model Picture {
-  id         Int     @id @default(autoincrement())
-  judul String
-  deskripsi String?
+  id          Int    @id @default(autoincrement())
+  title       String @unique
+  description String
   picture_url String
 
   @@map("pictures")
