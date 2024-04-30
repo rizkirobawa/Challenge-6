@@ -12,3 +12,12 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Picture {
+  id         Int     @id @default(autoincrement())
+  judul String
+  deskripsi String?
+  picture_url String
+
+  @@map("pictures")
+}
