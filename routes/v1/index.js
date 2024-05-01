@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Picture = require("../v1/picture.routes");
-const { image } = require("../../libs/multer");
+const User = require("../v1/user.routes");
+const Auth = require("../v1/auth.routes");
 
+router.use("/api/v1", Auth);
+router.use("/api/v1", User);
 router.use("/api/v1", Picture);
 
 module.exports = router;

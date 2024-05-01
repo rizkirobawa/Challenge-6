@@ -39,6 +39,7 @@ module.exports = {
           title,
           description,
           picture_url: url,
+          user_id: req.user.id,
         },
       });
 

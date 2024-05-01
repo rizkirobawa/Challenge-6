@@ -13,11 +13,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id         Int       @id @default(autoincrement())
+  first_name String
+  last_name  String
+  email      String    @unique
+  password   String
+  address    String?
+  occupation String?
+  avatar_url String?
+  Picture    Picture[]
+
+  @@map("users")
+}
+
 model Picture {
   id          Int    @id @default(autoincrement())
   title       String @unique
   description String
   picture_url String
+  user        User?  @relation(fields: [user_id], references: [id])
+  user_id      Int?
 
   @@map("pictures")
 }

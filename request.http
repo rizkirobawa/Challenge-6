@@ -1,8 +1,63 @@
+### create user
+POST http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+    "first_name": "michael",
+    "last_name": "jhon",
+    "email": "michaelj@gmail.com",
+    "password": "123456"
+}
+
+### Login user
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "michaelj@gmail.com",
+    "password": "123456"
+}
+
+### verified login
+GET http://localhost:3000/api/v1/auth/authenticate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
+
+### Get all user
+GET http://localhost:3000/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
+
+### Get all user by search
+GET http://localhost:3000/api/v1/users?search=michael
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
+
+### Get user by id
+GET http://localhost:3000/api/v1/users/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzksIm5hbWUiOiJwb2tlIiwiZW1haWwiOiJwb2tlQGdtYWlsLmNvbSIsImlhdCI6MTcxMzcxNDE4NH0.rTMBaKCkfTD0oI5gm4l03JEqxzhH7LBpa0SLmUbMRIE
+
+### Update profile
+PUT http://localhost:3000/api/v1/users/3/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
+Content-Type: application/json
+
+{
+    "address" : "Jl. Menuju Surga X",
+    "occupation" : "Software Engineer" 
+}
+
+
+
+### Delete 
+DELETE  http://localhost:3000/api/v1/users/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
+
 ### GET all picture
 GET http://localhost:3000/api/v1/pictures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
 
 ### GET picture by id
 GET http://localhost:3000/api/v1/pictures/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
 
 ### Delete picture by id
 DELETE http://localhost:3000/api/v1/pictures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
