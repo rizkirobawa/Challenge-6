@@ -146,12 +146,6 @@ module.exports = {
     try {
       const id = Number(req.params.id);
 
-      let strFile = req.file.buffer.toString("base64");
-      let { url } = await imagekit.upload({
-        fileName: Date.now() + path.extname(req.file.originalname),
-        file: strFile,
-      });
-
       const exist = await prisma.user.findUnique({
         where: { id },
       });
@@ -163,6 +157,13 @@ module.exports = {
           data: null,
         });
       }
+
+      let strFile = req.file.buffer.toString("base64");
+      let { url } = await imagekit.upload({
+        fileName: Date.now() + path.extname(req.file.originalname),
+        file: strFile,
+        folder: "/challenge-6/avatars",
+      });
 
       const users = await prisma.user.update({
         where: { id },

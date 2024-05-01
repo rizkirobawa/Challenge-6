@@ -31,7 +31,7 @@ module.exports = {
       let { url } = await imagekit.upload({
         fileName: Date.now() + path.extname(req.file.originalname),
         file: strFile,
-        folder: "/challenge-6",
+        folder: "/challenge-6/pictures",
       });
 
       let picture = await prisma.picture.create({
@@ -110,10 +110,6 @@ module.exports = {
         });
       }
 
-      const pictureURL = exist.picture_url;
-
-      await imagekit.deleteFile(pictureURL);
-
       await prisma.picture.delete({
         where: { id: id },
       });
@@ -126,6 +122,7 @@ module.exports = {
       next(error);
     }
   },
+
 
   update: async (req, res, next) => {
     try {
