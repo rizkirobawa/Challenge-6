@@ -28,7 +28,7 @@ module.exports = {
       }
 
       let strFile = req.file.buffer.toString("base64");
-      let { url } = await imagekit.upload({
+      let { url, fileId } = await imagekit.upload({
         fileName: Date.now() + path.extname(req.file.originalname),
         file: strFile,
         folder: "/challenge-6/pictures",
@@ -39,7 +39,8 @@ module.exports = {
           title,
           description,
           picture_url: url,
-          user_id: req.user.id,
+          user_id: req.user.id, 
+          picture_id: fileId,
         },
       });
 
@@ -57,14 +58,19 @@ module.exports = {
     try {
       const { search } = req.query;
 
-      const picture = await prisma.picture.findMany({
+      const pictures = await prisma.picture.findMany({
         where: { title: { contains: search, mode: "insensitive" } },
+      });
+
+      pictures.map((pict) => {
+        delete pict.picture_id;
+        // delete pict.user_id
       });
 
       res.status(200).json({
         status: true,
         message: "OK",
-        data: picture,
+        data: pictures,
       });
     } catch (error) {
       next(error);
@@ -110,32 +116,31 @@ module.exports = {
         });
       }
 
-      await prisma.picture.delete({
-        where: { id: id },
-      });
-
-      res.status(200).json({
-        status: true,
-        message: `Picture with ID ${id} deleted successfully`,
+      imagekit.deleteFile(exist.picture_id, async (error, result) => {
+        if (error) {
+          console.log(error, "ini error");
+          return res.status(500).json({
+            status: false,
+            message: "Failed to delete image from ImageKit",
+          });
+        } else {
+          await prisma.picture.delete({
+            where: { id },
+          });
+          return res.status(200).json({
+            status: true,
+            message: "Image deleted successfully",
+          });
+        }
       });
     } catch (error) {
       next(error);
     }
   },
 
-
   update: async (req, res, next) => {
     try {
       const id = Number(req.params.id);
-
-      const { title, description } = req.body;
-
-      if (!title && !description) {
-        return res.status(400).json({
-          status: false,
-          message: "At least one Input must be required",
-        });
-      }
 
       const exist = await prisma.picture.findUnique({ where: { id: id } });
 
@@ -144,6 +149,15 @@ module.exports = {
           status: false,
           message: `Can't find picture with ID ${id}`,
           data: null,
+        });
+      }
+
+      const { title, description } = req.body;
+
+      if (!title && !description) {
+        return res.status(400).json({
+          status: false,
+          message: "At least one Input must be required",
         });
       }
 
