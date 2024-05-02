@@ -173,7 +173,7 @@ module.exports = {
 
       res.status(200).json({
         status: true,
-        message: "User updated successfully",
+        message: "Avatar updated successfully",
         data: users,
       });
     } catch (error) {
@@ -185,13 +185,40 @@ module.exports = {
     try {
       const id = Number(req.params.id);
 
-      const users = await prisma.user.findUnique({
+      const exist = await prisma.user.findUnique({
         where: { id: id },
+        include: { Picture: true },
       });
 
-      if (!users) {
+      if (!exist) {
         return handleError(res, 404, `User with ID ${id} not found`);
       }
+
+      // // Delete images from ImageKit
+      // for (const picture of exist.picture) {
+      //   try {
+      //     if (picture.picture_id) {
+      //       await imagekit.deleteFile(picture.picture_id);
+      //     } else {
+      //       console.log(`Picture With ID ${picture.id} not found`);
+      //     }
+      //   } catch (error) {
+      //     console.error("Failed to delete image from ImageKit:", error.message);
+      //   }
+      // }
+
+      for (const picture of exist.Picture) {
+        try {
+          await imagekit.deleteFile(picture.picture_url);
+        } catch (error) {
+          console.error("Failed to delete image from ImageKit:", error.message);
+        }
+      }
+
+      // Delete images from Prisma
+      await prisma.picture.deleteMany({
+        where: { user_id: id },
+      });
 
       await prisma.user.delete({
         where: { id: id },

@@ -32,8 +32,9 @@ model Picture {
   title       String @unique
   description String
   picture_url String
+  picture_id  String
   user        User?  @relation(fields: [user_id], references: [id])
-  user_id      Int?
+  user_id     Int?
 
   @@map("pictures")
 }
