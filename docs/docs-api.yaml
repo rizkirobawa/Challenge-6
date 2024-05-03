@@ -1,0 +1,832 @@
+openapi: 3.0.1
+info:
+  title: Post Picture API
+  description: Documentation for Simple Post Picture API
+  version: 1.0.1
+  contact:
+    email: rizkirobawa@gmail.com
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:3000/api/v1
+tags:
+  - name: Users
+    description: Operations about Users
+  - name: Pictures
+    description: Operations about Accounts
+paths:
+  /auth/register:
+    post:
+      tags:
+        - "Users"
+      summary: Register user
+      description: Register user for login into system
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/CreateUser"
+      responses:
+        201:
+          description: The user has been successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: User created successfully
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          first_name:
+                            type: string
+                            example: kibow
+                          last_name:
+                            type: string
+                            example: ole
+                          email:
+                            type: string
+                            example: kibowole@gmail.com
+                          address:
+                            type: string
+                            example: ~
+                          occupation:
+                            type: string
+                            example: ~
+                          avatar_url:
+                            type: string
+                            example: ~
+        409:
+          description: Conflict - Email has already been used!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Email has already been used!
+                  data:
+                    example: ~
+        422:
+          description: Unprocessable Entity - Input must be required!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Input must be required!
+                  data:
+                    example: ~
+  /auth/login:
+    post:
+      tags:
+        - "Users"
+      summary: Login user
+      description: Login user for login into system
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/LoginUser"
+      responses:
+        201:
+          description: The user loign has been successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          first_name:
+                            type: string
+                            example: kibow
+                          last_name:
+                            type: string
+                            example: ole
+                          email:
+                            type: string
+                            example: kibowole@gmail.com
+                          address:
+                            type: string
+                            example: Jl. K.H Achmad Dahlan 666
+                          occupation:
+                            type: string
+                            example: Senior BackEnd Engineer
+                          avatar_url:
+                            type: string
+                            example: https://ik.imagekit.io/rizkirobawa/challenge-6/avatars/1714655913794_klCOOwnIB.png
+                          token:
+                            type: string
+                            example: dahyjekr4kyuyklk
+        400:
+          description: Email and password are required!!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Email and password are required!
+                  data:
+                    example: ~
+        401:
+          description: Invalid email or password!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Invalid email or password!
+                  data:
+                    example: ~
+  /auth/authenticate:
+    get:
+      tags:
+        - "Users"
+      summary: Authenticate user
+      description: Authenticate user with the token.
+      responses:
+        200:
+          description: Login was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: guntur
+                      email:
+                        type: string
+                        example: guntur@gmail.com
+        400:
+          description: Token not provided!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: token not provided
+                  data:
+                    example: ~
+        401:
+          description: Invalid Token!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Invalid Token
+                  data:
+                    example: ~
+        402:
+          description: Token Expired!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Token Expired
+                  data:
+                    example: ~
+        409:
+          description: JWT malformed!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: jwt malformed
+                  data:
+                    example: ~
+      security:  
+        - bearerAuth: []
+  /users:
+    get:
+      tags:
+        - "Users"
+      summary: Get all user
+      description: Get all user
+      parameters:
+        - schema:
+            type: string
+          name: search
+          in: query
+      responses:
+        200:
+          description: Get all user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Users"
+      security:  
+      - bearerAuth: []
+  /users/{id}:
+    get:
+      tags:
+        - "Users"
+      summary: Get user by id
+      description: Get user by id
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          description: ID of user to return
+          in: path
+          required: true
+      responses:
+        200:
+          description: Get user by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Users"
+        404:
+          description: Can't find user with ID 100
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find user with ID 100
+      security:  
+        - bearerAuth: []
+    delete:
+      tags:
+        - "Users"
+      summary: Delete user by id
+      description: Delete user by id
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          description: The ID of the category to retrieve.
+          in: path
+          required: true
+      responses:
+        200:
+          description: The user has been successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: User with ID 1 deleted successfully!
+        404:
+          description: Can't find user with ID 100
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: User with ID 100 not found
+      security:  
+        - bearerAuth: []
+  /users/{id}/profile:
+    put:
+      tags:
+        - "Users"
+      summary: Update user by id
+      description: Update user by id
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UpdateUser"
+      responses:
+        200:
+          description: Update user by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Update user successfully!
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      first_name:
+                        type: string
+                        example: kibow
+                      last_name:
+                        type: string
+                        example: ole
+                      email:
+                        type: string
+                        example: kibowole@gmail.com
+                      address:
+                        type: string
+                        example: Jl. K.H Achmad Dahlan 666
+                      occupation:
+                        type: string
+                        example: Senior BackEnd Engineer
+                      avatar_url:
+                        type: string
+                        example: ~
+        400:
+          description: At least one Input must be required!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: At least one Input must be required!
+                  data:
+                    example: ~
+        404:
+          description: Can't find user with ID 100
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find user with ID 100
+      security:  
+        - bearerAuth: []
+  /users/{id}/avatar:
+    put:
+      tags:
+        - "Users"
+      summary: Update avatar user by id
+      description: Update avatar user by id
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UpdateAvatar"
+      responses:
+        200:
+          description: Update user by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Avatar updated successfully!
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      first_name:
+                        type: string
+                        example: kibow
+                      last_name:
+                        type: string
+                        example: ole
+                      email:
+                        type: string
+                        example: kibowole@gmail.com
+                      address:
+                        type: string
+                        example: ~
+                      occupation:
+                        type: string
+                        example: ~
+                      avatar_url:
+                        type: string
+                        example: https://ik.imagekit.io/rizkirobawa/challenge-6/avatars/1714655913794_klCOOwnIB.png
+        404:
+          description: Can't find user with ID 100
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: User with id 100 not found
+      security:  
+        - bearerAuth: []
+  /pictures:
+    post:
+      tags:
+        - "Pictures"
+      summary: Post Picture
+      description: User Post a Picture 
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/PostPicture"
+      responses:
+        200:
+          description: Update user by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Picture uploaded successfully!
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Pictures"
+        400:
+          description: Title, description, and picture must be required!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Title, description, and picture must be required!
+      security:  
+      - bearerAuth: []
+    get:
+      tags:
+        - "Pictures"
+      summary: Get all picture
+      description: Get all picture
+      parameters:
+        - schema:
+            type: string
+          name: search
+          in: query
+      responses:
+        200:
+          description: Get all picture
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/Pictures"
+      security:  
+      - bearerAuth: []
+  /pictures/{id}:
+    get:
+      tags:
+        - "Pictures"
+      summary: Post Picture
+      description: User Post a Picture
+      responses:
+        200:
+          description: Get picture by Id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Pictures"
+        404:
+          description: Can't find Picture with ID 100
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find picture with ID 100
+      security:  
+      - bearerAuth: []
+    put:
+      tags:
+        - "Pictures"
+      summary: Update Picture
+      description: User Update a Picture
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UpdatePicture"
+      responses:
+        200:
+          description: Update picture by Id successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Pictures"
+      security:  
+      - bearerAuth: []
+    delete:
+      tags:
+        - "Pictures"
+      summary: Delete picture by id
+      description: Delete picture by id
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          description: The ID of the category to retrieve.
+          in: path
+          required: true
+      responses:
+        200:
+          description: The picture has been successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Image deleted successfully
+      security:  
+      - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Users:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        first_name:
+          type: string
+          example: kibow
+        last_name:
+          type: string
+          example: ole
+        email:
+          type: string
+          example: kibowole@gmail.com
+        password:
+          type: string
+          example: 123456
+        address:
+          type: string
+          example: Jl. Menuju Surga IX
+        occupation:
+          type: string
+          example: Software Engineer
+        avatar_url:
+          type: string
+          example: https://ik.imagekit.io/rizkirobawa/challenge-6/avatars/1714655913794_klCOOwnIB.png
+    Pictures:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: cloud
+        description:
+          type: string
+          example: weather cloudy
+        picture_url:
+          type: string
+          example: https://ik.imagekit.io/rizkirobawa/challenge-6/pictures/1714655980967_Hp3ktqz0s.jpg
+        picture_id:
+          type: string
+          example: 663392f088c257da336ef2af
+        user_id:
+          type: integer
+          example: 1
+  requestBodies:
+    CreateUser:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              first_name:
+                type: string
+                example: kibow
+              last_name:
+                type: string
+                example: ole
+              email:
+                type: string
+                example: kibowole@gmail.com
+              password:
+                type: string
+                example: 123456
+    LoginUser:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: kibowole@gmail.com
+              password:
+                type: string
+                example: 123456
+    UpdateUser:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+                example: Jl. K.H Achmad Dahlan 666
+              occupation:
+                type: string
+                example: Senior BackEnd Engineer
+    UpdateAvatar:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+    PostPicture:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: baby milo
+              description:
+                type: string
+                example: sticker baby milo brown
+              file:
+                type: string
+                format: binary
+    UpdatePicture:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: baby milo1
+              description:
+                type: string
+                example: sticker baby milo blue

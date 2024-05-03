@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  store,
+  register,
   index,
   show,
   update,
@@ -11,7 +11,7 @@ const {
 const { restrict } = require("../../middlewares/auth.middleware");
 const { image } = require("../../libs/multer");
 
-router.post("/users", store);
+router.post("/auth/register", register);
 router.get("/users", restrict, index);
 router.get("/users/:id", restrict, show);
 router.put("/users/:id/profile", restrict, update);

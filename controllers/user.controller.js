@@ -5,12 +5,12 @@ const imagekit = require("../libs/imagekit");
 const path = require("path");
 
 module.exports = {
-  store: async (req, res, next) => {
+  register: async (req, res, next) => {
     try {
       let { first_name, last_name, email, password } = req.body;
 
       if (!first_name || !last_name || !email || !password) {
-        return res.status(400).json({
+        return res.status(422).json({
           status: false,
           message: "Input must be required!",
         });
@@ -21,9 +21,9 @@ module.exports = {
       });
 
       if (exist) {
-        return res.status(401).json({
+        return res.status(409).json({
           status: false,
-          message: "Email already used!",
+          message: "Email has already been used!",
         });
       }
       let encryptedPassword = await bcrypt.hash(password, 10);
@@ -106,7 +106,7 @@ module.exports = {
       if (!first_name && !last_name && !email && !address && !occupation) {
         return res.status(400).json({
           status: false,
-          message: "At least one Input must be required",
+          message: "At least one Input must be required!",
         });
       }
 
@@ -173,7 +173,7 @@ module.exports = {
 
       res.status(200).json({
         status: true,
-        message: "Avatar updated successfully",
+        message: "Avatar updated successfully!",
         data: users,
       });
     } catch (error) {
@@ -194,19 +194,6 @@ module.exports = {
         return handleError(res, 404, `User with ID ${id} not found`);
       }
 
-      // // Delete images from ImageKit
-      // for (const picture of exist.picture) {
-      //   try {
-      //     if (picture.picture_id) {
-      //       await imagekit.deleteFile(picture.picture_id);
-      //     } else {
-      //       console.log(`Picture With ID ${picture.id} not found`);
-      //     }
-      //   } catch (error) {
-      //     console.error("Failed to delete image from ImageKit:", error.message);
-      //   }
-      // }
-
       for (const picture of exist.Picture) {
         try {
           await imagekit.deleteFile(picture.picture_url);
@@ -226,7 +213,7 @@ module.exports = {
 
       res.status(200).json({
         status: true,
-        message: `User with ID ${id} deleted successfully`,
+        message: `User with ID ${id} deleted successfully!`,
       });
     } catch (error) {
       next(error);

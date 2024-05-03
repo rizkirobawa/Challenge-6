@@ -46,7 +46,7 @@ module.exports = {
 
       res.status(200).json({
         status: true,
-        message: "Picture uploaded successfully",
+        message: "Picture uploaded successfully!",
         data: picture,
       });
     } catch (error) {
