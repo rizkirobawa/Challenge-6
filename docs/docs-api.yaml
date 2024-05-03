@@ -10,7 +10,7 @@ externalDocs:
   url: http://swagger.io
 servers:
   - url: http://localhost:3000/api/v1
-  - url: http://localhost:3000/api/v1
+  - url: express-js-production-5ad3.up.railway.app/api/v1
 tags:
   - name: Users
     description: Operations about Users
