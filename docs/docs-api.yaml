@@ -10,6 +10,7 @@ externalDocs:
   url: http://swagger.io
 servers:
   - url: http://localhost:3000/api/v1
+  - url: http://localhost:3000/api/v1
 tags:
   - name: Users
     description: Operations about Users
