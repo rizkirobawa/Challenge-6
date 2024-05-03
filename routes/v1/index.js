@@ -23,4 +23,7 @@ router.use("/api/v1", Auth);
 router.use("/api/v1", User);
 router.use("/api/v1", Picture);
 
+// Welcome
+app.get('/', (req,res) => res.json({status: true, message: "Welcome To Users Post Picture Backend API", data: null}))
+
 module.exports = router;
