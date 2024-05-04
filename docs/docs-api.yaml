@@ -303,7 +303,28 @@ paths:
                     type: array
                     items:
                       type: object
-                      $ref: "#/components/schemas/Users"
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        first_name:
+                          type: string
+                          example: kibow
+                        last_name:
+                          type: string
+                          example: ole
+                        email:
+                          type: string
+                          example: kibowole@gmail.com
+                        address:
+                          type: string
+                          example: Jl. Menuju Surga IX
+                        occupation:
+                          type: string
+                          example: Software Engineer
+                        avatar_url:
+                          type: string
+                          example: https://ik.imagekit.io/rizkirobawa/challenge-6/avatars/1714655913794_klCOOwnIB.png
       security:  
       - bearerAuth: []
   /users/{id}:
@@ -335,7 +356,28 @@ paths:
                     example: OK
                   data:
                     type: object
-                    $ref: "#/components/schemas/Users"
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      first_name:
+                        type: string
+                        example: kibow
+                      last_name:
+                        type: string
+                        example: ole
+                      email:
+                        type: string
+                        example: kibowole@gmail.com
+                      address:
+                        type: string
+                        example: Jl. Menuju Surga IX
+                      occupation:
+                        type: string
+                        example: Software Engineer
+                      avatar_url:
+                        type: string
+                        example: https://ik.imagekit.io/rizkirobawa/challenge-6/avatars/1714655913794_klCOOwnIB.png
         404:
           description: Can't find user with ID 100
           content:

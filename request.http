@@ -1,5 +1,5 @@
 ### create user
-POST http://localhost:3000/api/v1/auth/register
+POST express-js-production-5ad3.up.railway.app/api/v1/auth/register
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### Login user
-POST http://localhost:3000/api/v1/auth/login
+POST express-js-production-5ad3.up.railway.app/api/v1/auth/login
 Content-Type: application/json
 
 {
@@ -19,15 +19,15 @@ Content-Type: application/json
 }
 
 ### verified login
-GET http://localhost:3000/api/v1/auth/authenticate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZmlyc3RfbmFtZSI6InNhYnJpbmEiLCJsYXN0X25hbWUiOiJiaW5hciIsImVtYWlsIjoic2FicmluYUBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjoiaHR0cHM6Ly9pay5pbWFnZWtpdC5pby9yaXpraXJvYmF3YS9jaGFsbGVuZ2UtNi9hdmF0YXJzLzE3MTQ2NTU5MTM3OTRfa2xDT093bklCLnBuZyIsImlhdCI6MTcxNDY1OTc4OX0.y56YEDbJw8ckKFO9xGXzGkgGYXBRPXeuE5O2VJm-FjA
+GET express-js-production-5ad3.up.railway.app/api/v1/auth/authenticate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6InNhYnJpbmEiLCJsYXN0X25hbWUiOiJiaW5hciIsImVtYWlsIjoic2FicmluYUBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ4MjM5NjZ9.sqQzxA0tYO_3y75uwAkD3UlGXt2zqD5W3huLRFEukxc
 
 ### Get all user
-GET http://localhost:3000/api/v1/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
+GET express-js-production-5ad3.up.railway.app/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6InNhYnJpbmEiLCJsYXN0X25hbWUiOiJiaW5hciIsImVtYWlsIjoic2FicmluYUBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ4MjM5NjZ9.sqQzxA0tYO_3y75uwAkD3UlGXt2zqD5W3huLRFEukxc
 
 ### Get all user by search
-GET http://localhost:3000/api/v1/users?search=michael
+GET express-js-production-5ad3.up.railway.app/api/v1/users?search=michael
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Im1pY2hhZWwiLCJsYXN0X25hbWUiOiJqaG9uIiwiZW1haWwiOiJtaWNoYWVsakBnbWFpbC5jb20iLCJhZGRyZXNzIjpudWxsLCJvY2N1cGF0aW9uIjpudWxsLCJhdmF0YXJfdXJsIjpudWxsLCJpYXQiOjE3MTQ1NDAxMjd9.z9ehYjy31BGm5nya1tA8ZM7chDruukWQVuzR1atqW-s
 
 ### Get user by id
