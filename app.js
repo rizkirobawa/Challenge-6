@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(router)
 
+app.get('/', (req,res) => res.json({status: true, message: "Use endpoint /api/v1/api-docs to access API documentation", data: null}))
 
 // 500 error handler
 app.use((err, req, res, next) => {
