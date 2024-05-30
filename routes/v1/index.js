@@ -10,13 +10,20 @@ const fs = require("fs");
 const path = require("path");
 
 const swagger_path = path.resolve(__dirname, "../../docs/docs-api.yaml");
+const customCssUrl =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css";
+const customJs = [
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js",
+];
+
 const file = fs.readFileSync(swagger_path, "utf-8");
 
 const swaggerDocument = yaml.parse(file);
 router.use(
   "/api/v1/api-docs",
   swaggerUI.serve,
-  swaggerUI.setup(swaggerDocument)
+  swaggerUI.setup(swaggerDocument, { customCssUrl, customJs })
 );
 
 router.use("/api/v1", Auth);
