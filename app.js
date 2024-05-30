@@ -1,11 +1,11 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
 const router = require("./routes/v1")
 const cors = require('cors')
-
-var app = express();
+const PORT = process.env.PORT || 3000;
+const app = express();
 
 app.use(cors())
 app.use(logger('dev'));
@@ -32,6 +32,10 @@ app.use((req, res, next) => {
     message: `are you lost? ${req.method} ${req.url} is not registered!`,
     data: null,
   });
+});
+
+app.listen(PORT, () => {
+  console.log(`listening on *:${PORT}`);
 });
 
 module.exports = app;
